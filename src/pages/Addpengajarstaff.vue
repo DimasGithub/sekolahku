@@ -38,7 +38,18 @@
             label="Nama lengkap"
             style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
           />
-
+              <p style=" width:90%; ">Nip :</p>
+              <q-input
+                type="number"
+                rounded
+                name="nip"
+                dense
+                outlined
+                lazy-rules
+                :rules="[val => (val && val.length > 0) || 'Isikan Jawban ini']"
+                label="Nip"
+                style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
+              />
           <p style=" width:90%; ">Jabatan : </p>
           <q-input
           rounded

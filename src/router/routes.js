@@ -26,7 +26,12 @@ const routes = [
   {
     path: '/addpengajarstaff', component: () => import('pages/Addpengajarstaff.vue')
   },
-  
+  {
+    path: '/editpengajarstaff', component: () => import('pages/Editpengajarstaff.vue')
+  },
+  {
+    path: '/indexpengumuman', component: () => import('pages/IndexPengumuman.vue')
+  },
 
   // Always leave this as last one,
   // but you can also remove it
