@@ -1,0 +1,107 @@
+<template>
+  <transition
+    enter-active-class="animated fadeInRight"
+    leave-active-class="animated fadeOutLeft"
+    appear
+    :duration="700"
+  >
+    <q-page>
+      <div class="q-pa-md q-gutter-sm">
+        <h4>Edit Visi & Misi</h4>
+        <p style="font-size : 20px;">Visi :</p>
+        <div v-for="a in visimisi" :key="a.id">
+          <q-editor
+            v-model="a.visi"
+            :definitions="{
+              bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' }
+            }"
+          />
+        </div>
+
+        <p style="font-size : 20px;">Misi :</p>
+        <div v-for="a in visimisi" :key="a.id">
+          <q-editor
+            v-model="a.misi"
+            :definitions="{
+              bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' }
+            }"
+          />
+        </div>
+        <q-btn
+          rounded
+          color="primary"
+          label="Edit"
+          dense
+          @click="ubah"
+          style="width:100%; margin-top: 20px; font-weight:bold;"
+        />
+        <q-btn
+          rounded
+          outline
+          color="primary"
+          label="Batal"
+          dense
+          style="width:100%; margin-top: 20px; margin-bottom: 20px;font-weight:bold;"
+        />
+      </div>
+    </q-page>
+  </transition>
+</template>
+
+<script>
+import axios from "app/node_modules/axios";
+import _ from "lodash";
+export default {
+  data() {
+    return {
+      visi:'',
+      misi:'',
+      visimisi: {
+      }
+    };
+  },
+  methods:{
+ ubah() {
+      let visimisi = new FormData();
+      
+      _.each(this.visimisi, (value, key) => {
+        visimisi.append(key, value);
+      });
+      axios
+        .put(
+          "http://127.0.0.1:8000/api/visimisi/1?format=json",
+          this.visimisi
+        )
+        .then(response => {
+          this.$router.push("/indexadmin");
+          this.$q.notify({
+            type: "positive",
+            message: `Data berhasil diubah.`
+          });
+        })
+        .catch(err => {
+          if (err.response.status === 422) {
+            this.$q.notify({
+              type: "negative",
+              message: `Data gagal diubah.`
+            });
+            this.errors = [];
+            _.each(err.response.data.errors, error => {
+              _.each(error, e => {
+                this.errors.push(e);
+              });
+            });
+          }
+        });
+    }
+  },
+  mounted() {
+    axios
+      .get("http://127.0.0.1:8000/api/visimisi/1?format=json")
+      .then(response => {
+        this.visimisi = response.data;
+      });
+  
+  }
+};
+</script>
