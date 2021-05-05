@@ -9,24 +9,22 @@
       <div class="q-pa-md q-gutter-sm">
         <h4>Edit Visi & Misi</h4>
         <p style="font-size : 20px;">Visi :</p>
-        <div v-for="a in visimisi" :key="a.id">
           <q-editor
-            v-model="a.visi"
+            v-model="visimisi.visi"
             :definitions="{
               bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' }
             }"
           />
-        </div>
-
+     
         <p style="font-size : 20px;">Misi :</p>
-        <div v-for="a in visimisi" :key="a.id">
+       
           <q-editor
-            v-model="a.misi"
+            v-model="visimisi.misi"
             :definitions="{
               bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' }
             }"
           />
-        </div>
+    
         <q-btn
           rounded
           color="primary"
@@ -54,8 +52,7 @@ import _ from "lodash";
 export default {
   data() {
     return {
-      visi:'',
-      misi:'',
+
       visimisi: {
       }
     };
@@ -98,7 +95,7 @@ export default {
     axios
       .get("http://127.0.0.1:8000/api/visimisi/1?format=json")
       .then(response => {
-        this.visimisi = response.data;
+        this.visimisi = response.data[0];
       });
   
   }

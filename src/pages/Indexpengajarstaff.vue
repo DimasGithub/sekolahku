@@ -119,6 +119,9 @@
                 </div>
               </template>
             </q-table>
+             <q-page-sticky position="bottom-right" :offset="[15 , 50]">
+            <q-btn @click="$router.push('/addpengajarstaff')" fab icon="add" color="secondary" />
+          </q-page-sticky>
           </div>
         </transition>
       </q-page>
@@ -163,24 +166,24 @@ export default {
       judul: "Petugas"
     };
   },
+    mounted() {
+    axios
+      .get("http://127.0.0.1:8000/api/pengajarstaff/?format=json")
+      .then(response => (this.datapengajar = response.data));
+  },
   methods: {
     hapus(id) {
       axios
         .delete("http://127.0.0.1:8000/api/Detailpengajarstaff/" + id)
-        .then(
-          location.reload()
-        ).catch(err => err)
+        .then(location.reload())
+        .catch(err => err);
       console.log("Deleted article successfully " + id);
     },
     ngedit(id) {
       this.$router.push("editpengajarstaff/" + id);
     }
   },
-  mounted() {
-    axios
-      .get("http://127.0.0.1:8000/api/pengajarstaff/?format=json")
-      .then(response => (this.datapengajar = response.data));
-  }
+
 };
 </script>
 <style>

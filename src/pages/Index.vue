@@ -84,14 +84,13 @@
         >
           <div style="margin:10px; padding: 1px;">
             <p style="font-size: 30px; font-weight:bold;">Visi</p>
-            <div v-for=" a in visimisi" :key="a.id">
-                <p>{{a.visi}}</p>
+            <div v-for="a in visimisi" :key="a.id">
+              <p>{{ a.visi }}</p>
             </div>
             <p style="font-size: 30px; font-weight:bold;">Misi</p>
-                        <div v-for=" a in visimisi" :key="a.id">
-                <p v-html="a.misi"></p>
+            <div v-for="a in visimisi" :key="a.id">
+              <p v-html="a.misi"></p>
             </div>
- 
           </div>
         </q-card>
       </transition>
@@ -106,61 +105,56 @@
           class="my-card"
           style=" border-radius: 20px;"
         >
+          <q-input
+  
+            outlined
+            dense
+            border
+            rounded
+            style="top: 35px; width: 100%;"
+            v-model="filter"
+            placeholder="Cari pegawai"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
           <q-scroll-area
             :thumb-style="thumbStyle"
             :content-style="contentStyle"
             :content-active-style="contentActiveStyle"
-            style="height: 470px; border-radius:20px;"
+            style="height: 470px; "
           >
-            <div style="margin:10px; padding: 1px;">
-              <div class="row">
-                <q-img
-                  src="~assets/avatar.png"
-                  style="width:100px; height:100px; border-radius:200%;"
-                />
-                <div class="column" style="margin-left : 30px;">
-                  <p>Nama : dimas</p>
-                  <p>Nip : 180302081</p>
-                  <p>Jabatan : kepala sekolah</p>
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <q-img
-                  src="~assets/avatar.png"
-                  style="width:100px; height:100px; border-radius:200%;"
-                />
-                <div class="column" style="margin-left : 30px;">
-                  <p>Nama : dimas</p>
-                  <p>Nip : 180302081</p>
-                  <p>Jabatan : kepala sekolah</p>
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <q-img
-                  src="~assets/avatar.png"
-                  style="width:100px; height:100px; border-radius:200%;"
-                />
-                <div class="column" style="margin-left : 30px;">
-                  <p>Nama : dimas</p>
-                  <p>Nip : 180302081</p>
-                  <p>Jabatan : kepala sekolah</p>
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <q-img
-                  src="~assets/avatar.png"
-                  style="width:100px; height:100px; border-radius:200%;"
-                />
-                <div class="column" style="margin-left : 30px;">
-                  <p>Nama : dimas</p>
-                  <p>Nip : 180302081</p>
-                  <p>Jabatan : kepala sekolah</p>
-                </div>
-              </div>
-              <hr />
+            <div class="q-pa-md">
+              <q-table
+                grid
+                :data="datapengajar"
+                :columns="columns"
+                row-key="name"
+                :filter="filter"
+                hide-header
+              >
+                <template v-slot:item="props">
+                  <div class="q-pa-xs col-xs-12 col-sm-12 col-md-12">
+                    <div class="row ">
+                      <div style="width:25%;">
+                        <q-img
+                          :src="'http://127.0.0.1:8000' + props.row.picture"
+                          style="width:90px; height:90px; border-radius:100%;margin-right:20px;"
+                        />
+                      </div>
+                      <div style="width:75%;">
+                        <div class="column" style="margin-left : 30px;">
+                          <p>Nama : {{ props.row.nama }}</p>
+                          <p>Nip : {{ props.row.nip }}</p>
+                          <p>Jabatan : {{ props.row.jobs }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                  </div>
+                </template>
+              </q-table>
             </div>
           </q-scroll-area>
         </q-card>
@@ -341,71 +335,98 @@
 <script>
 const heavyList = [
   {
-    label: 'Visi misi',
-    class: 'q-pa-lg text-white'
+    label: "Visi misi",
+    class: "q-pa-lg text-white"
   },
   {
-    label: 'Pengajar dan staff',
-    class: 'q-pa-lg text-white'
+    label: "Pengajar dan staff",
+    class: "q-pa-lg text-white"
   },
   {
-    label: 'Pengumuman',
-    class: 'q-pa-lg text-white'
+    label: "Pengumuman",
+    class: "q-pa-lg text-white"
   },
   {
-    label: 'Berita',
-    class: 'q-pa-lg text-white'
+    label: "Berita",
+    class: "q-pa-lg text-white"
   },
   {
-    label: 'Jadwal',
-    class: 'q-pa-lg text-white'
+    label: "Jadwal",
+    class: "q-pa-lg text-white"
   },
   {
-    label: 'Login',
-    class: 'q-pa-lg text-white'
+    label: "Login",
+    class: "q-pa-lg text-white"
   }
 ];
-import axios from 'app/node_modules/axios';
+import axios from "app/node_modules/axios";
 export default {
   data() {
-
     return {
-      cek:{},
-      visimisi:{},
-      username: '',
-      password: '',
+      filter: "",
+
+      columns: [
+        {
+          name: "nama",
+          label: "Nama lengkap",
+          field: "nama",
+          align: "left",
+          sortable: true
+        },
+        {
+          name: "nip",
+          align: "left",
+          label: "Nip",
+          field: "nip",
+          sortable: true
+        },
+        {
+          name: "jobs",
+          align: "left",
+          label: "Jabatan",
+          field: "jobs",
+          sortable: true
+        },
+        { name: "actions", label: "Aksi", field: "id", align: "center" }
+      ],
+      datapengajar: [],
+      judul: "Petugas",
+      cek: {},
+      visimisi: {},
+      username: "",
+      password: "",
       step: 1,
       contentStyle: {
-        backgroundColor: 'rgba(0,0,0,0.02)',
-        color: '#555',
-        borderRadius: '20px'
+        backgroundColor: "rgba(0,0,0,0.02)",
+        color: "#555",
+        borderRadius: "20px"
       },
       contentActiveStyle: {
-        backgroundColor: '#eee',
-        color: 'black',
-        borderRadius: '20px'
+        backgroundColor: "#eee",
+        color: "black",
+        borderRadius: "20px"
       },
       thumbStyle: {
-        right: '2px',
-        borderRadius: '5px',
-        backgroundColor: '#26A69A',
-        width: '5px',
+        right: "2px",
+        borderRadius: "5px",
+        backgroundColor: "#26A69A",
+        width: "5px",
         opacity: 0.75
       },
-      page: 'awal',
+      page: "awal",
       heavyList,
       lorem:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       slide: 1,
       autoplay: true
     };
   },
   methods: {
     panggil(halaman) {
-      if (halaman !== 'Berita') {
+      if (halaman !== "Berita") {
         this.page = halaman;
       } else {
-        this.$router.push('/news');
+        this.$router.push("/news");
       }
     }
   },
@@ -416,7 +437,9 @@ export default {
         this.visimisi = response.data;
         console.log(this.visimisi.visi);
       });
-
+    axios
+      .get("http://127.0.0.1:8000/api/pengajarstaff/?format=json")
+      .then(response => (this.datapengajar = response.data));
   }
 };
 </script>
