@@ -63,7 +63,6 @@ export default {
   methods:{
  ubah() {
       let visimisi = new FormData();
-      
       _.each(this.visimisi, (value, key) => {
         visimisi.append(key, value);
       });

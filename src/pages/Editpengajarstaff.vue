@@ -17,81 +17,156 @@
     </q-header>
     <q-page-container>
       <div class="row" style="width:100%;">
-        <form>
           <transition
             enter-active-class="animated fadeInRight"
             leave-active-class="animated fadeOutLeft"
             appear
             :duration="700"
           >
-            <div class="row justify-center">
-              <p style=" width:90%; margin-top:20px;">Nama lengkap :</p>
-              <q-input
-                rounded
-                name="namaproduk"
-                dense
-                outlined
-                lazy-rules
-                :rules="[val => (val && val.length > 0) || 'Isikan Jawban ini']"
-                label="Nama lengkap"
-                style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
-              />
-              <p style=" width:90%; ">Nip :</p>
-              <q-input
-                type="number"
-                rounded
-                name="nip"
-                dense
-                outlined
-                lazy-rules
-                :rules="[val => (val && val.length > 0) || 'Isikan Jawban ini']"
-                label="Nip"
-                style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
-              />
-              <p style=" width:90%; ">Jabatan :</p>
-              <q-input
-                rounded
-                name="harga"
-                dense
-                outlined
-                label="Jabatan"
-                style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
-                lazy-rules
-                :rules="[val => (val && val.length > 0) || 'Isikan Jawban ini']"
-              />
-              <p style=" width:90%;">Profil gambar :</p>
-               <q-img
-                  src="~assets/avatar.png"
-                  style="width:200px; border-radius:200%;"
+            <form enctype="multipart/form-data">
+              <div class="row justify-center">
+                <p style=" width:90%; margin-top:20px;">Nama lengkap :</p>
+                <q-input
+                  rounded
+                  name="namaproduk"
+                  dense
+                  v-model="datapengajarstaf.nama"
+                  outlined
+                  lazy-rules
+                  :rules="[
+                    val => (val && val.length > 0) || 'Isikan Jawban ini'
+                  ]"
+                  label="Nama lengkap"
+                  style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
                 />
-              <p style=" width:90%;">Ganti profil gambar :</p>
-              <q-file
-                rounded
-                name="gambar"
-                dense
-                outlined
-                label="Gambar produk"
-                style="width:90%; margin-right:10px; margin-left:10px; margin-bottom: 20px; "
-              />
-              <q-btn
-                type="submit"
-                dense
-                rounded
-                color="primary"
-                label="Edit"
-                style="width:90%; margin-bottom:20px; justify-content: center;"
-              />
-            </div>
+                <p style=" width:90%; ">Nip :</p>
+                <q-input
+                  v-model="datapengajarstaf.nip"
+                  type="number"
+                  rounded
+                  name="nip"
+                  dense
+                  outlined
+                  lazy-rules
+                  :rules="[
+                    val => (val && val.length > 0) || 'Isikan Jawban ini'
+                  ]"
+                  label="Nip"
+                  style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
+                />
+                <p style=" width:90%; ">Jabatan :</p>
+                <q-input
+                  v-model="datapengajarstaf.jobs"
+                  rounded
+                  name="harga"
+                  dense
+                  outlined
+                  label="Jabatan"
+                  style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
+                  lazy-rules
+                  :rules="[
+                    val => (val && val.length > 0) || 'Isikan Jawban ini'
+                  ]"
+                />
+                <p style=" width:90%;">Profil gambar :</p>
+                <q-img
+                  :src="'http://127.0.0.1:8000' + datapengajarstaf.picture"
+                  style="width:200px; height:200px; border-radius:200px"
+                />
+                <p style=" width:90%;">Ganti profil gambar :</p>
+                <q-file
+                  @change="handleFileObject"
+                  rounded
+                  v-model="picture"
+                  name="gambar"
+                  dense
+                  outlined
+                  label="Gambar produk"
+                  style="width:90%; margin-right:10px; margin-left:10px; margin-bottom: 20px; "
+                />
+                <q-btn
+                  dense
+                  @click.prevent="ubah"
+                  type="submit"
+                  rounded
+                  color="primary"
+                  label="Edit"
+                  style="width:90%; margin-bottom:20px; justify-content: center;"
+                />
+              </div>
+            </form>
           </transition>
-        </form>
       </div>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import axios from "axios";
+import _ from "lodash";
 export default {
-  // name: 'PageName',
+  props: ["id"],
+  data() {
+    return {
+      confirm: false,
+      datapengajarstaf: {
+        nama: "",
+        nip: 0,
+        jobs: ""
+      },
+      picture: null
+    };
+  },
+  methods: {
+    handleFileObject() {
+      this.picture = this.$refs.file.files[0];
+      this.pictureName = this.picture.name;
+      console.log(this.pictureName);
+    },
+    ubah() {
+      let datapengajarstaf = new FormData();
+      datapengajarstaf.append("picture", this.picture);
+      _.each(this.datapengajarstaf, (value, key) => {
+        datapengajarstaf.append(key, value);
+      });
+      axios
+        .put("http://127.0.0.1:8000/api/Detailpengajarstaff/"+this.id, datapengajarstaf, {
+          headers: {
+            "Content-Type":
+              "multipart/form-data; charset=utf-8; boundary=" +
+              Math.random()
+                .toString()
+                .substr(2)
+          }
+        })
+        .then(response => {
+          this.$router.push("/indexpengajarstaff");
+          this.$q.notify({
+            type: "positive",
+            message: `Data berhasil ditambah.`
+          });
+        })
+        .catch(err => {
+          if (err.response.status === 422) {
+            this.errors = [];
+            _.each(err.response.data.errors, error => {
+              _.each(error, e => {
+                this.errors.push(e);
+              });
+            });
+          }
+        });
+    },
+    
+  },
+  mounted() {
+    axios
+      .get("http://127.0.0.1:8000/api/Detailpengajarstaff/" + this.id)
+      .then(response => {
+        this.datapengajarstaf = response.data[0];
+        console.log(this.datapengajarstaf);
+      });
+  }
 };
 </script>
 <style>

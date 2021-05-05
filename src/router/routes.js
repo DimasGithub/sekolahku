@@ -6,7 +6,6 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') }
     ]
-
   },
   {
     path: '/indexadmin',
@@ -19,18 +18,20 @@ const routes = [
     path: '/editvisimisi',
     component: () => import('layouts/BackLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/EditVisimisi.vue') },
-      { path: '/indexpengajarstaff', component: () => import('pages/Indexpengajarstaff.vue') }
+      { path: '', component: () => import('pages/EditVisimisi.vue') }
     ]    
   },
   {
     path: '/addpengajarstaff', component: () => import('pages/Addpengajarstaff.vue')
   },
   {
-    path: '/editpengajarstaff', component: () => import('pages/Editpengajarstaff.vue')
+    path: '/editpengajarstaff/:id', props: true, component: () => import('pages/Editpengajarstaff.vue')
   },
   {
     path: '/indexpengumuman', component: () => import('pages/IndexPengumuman.vue')
+  },
+  { 
+    path: '/indexpengajarstaff', component: () => import('pages/Indexpengajarstaff.vue') 
   },
 
   // Always leave this as last one,
