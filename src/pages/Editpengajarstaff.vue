@@ -23,7 +23,7 @@
             appear
             :duration="700"
           >
-            <form enctype="multipart/form-data">
+            <form>
               <div class="row justify-center">
                 <p style=" width:90%; margin-top:20px;">Nama lengkap :</p>
                 <q-input
@@ -77,8 +77,8 @@
                 <q-file
                   @change="handleFileObject"
                   rounded
-                  v-model="picture"
-                  name="gambar"
+                  v-model="gambar"
+                  name="picture"
                   dense
                   outlined
                   label="Gambar produk"
@@ -108,37 +108,30 @@ export default {
   props: ["id"],
   data() {
     return {
-      confirm: false,
-      datapengajarstaf: {
-        nama: "",
-        nip: 0,
-        jobs: ""
+      datapengajarstaf: { 
       },
-      picture: null
+      gambar: null
     };
   },
   methods: {
-    handleFileObject() {
-      this.picture = this.$refs.file.files[0];
-      this.pictureName = this.picture.name;
-      console.log(this.pictureName);
-    },
+
     ubah() {
       let datapengajarstaf = new FormData();
-      datapengajarstaf.append("picture", this.picture);
+      datapengajarstaf.append("nama", this.datapengajarstaf.nama);
+      datapengajarstaf.append("nip", this.datapengajarstaf.nip);
+      datapengajarstaf.append("jobs", this.datapengajarstaf.jobs);
+      datapengajarstaf.append("picture", this.gambar);
       _.each(this.datapengajarstaf, (value, key) => {
-        datapengajarstaf.append(key, value);
-      });
+      datapengajarstaf.append(key, value);
+            });
       axios
-        .put("http://127.0.0.1:8000/api/Detailpengajarstaff/"+this.id, datapengajarstaf, {
+        .put("http://127.0.0.1:8000/api/Detailpengajarstaff/"+this.id, datapengajarstaf,
+        {
           headers: {
-            "Content-Type":
-              "multipart/form-data; charset=utf-8; boundary=" +
-              Math.random()
-                .toString()
-                .substr(2)
+            "Content-Type":"multipart/form-data"
           }
-        })
+        }
+        )
         .then(response => {
           this.$router.push("/indexpengajarstaff");
           this.$q.notify({
@@ -156,6 +149,12 @@ export default {
             });
           }
         });
+    },    
+    
+    handleFileObject() {
+      this.gambar = this.$refs.file.files[0];
+      this.pictureName = this.picture.name;
+      console.log(this.gambar);
     },
     
   },

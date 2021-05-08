@@ -85,11 +85,11 @@
           <div style="margin:10px; padding: 1px;">
             <p style="font-size: 30px; font-weight:bold;">Visi</p>
             <div v-for="a in visimisi" :key="a.id">
-              <p>{{ a.visi }}</p>
+              <p v-html="a.visi"/>
             </div>
             <p style="font-size: 30px; font-weight:bold;">Misi</p>
             <div v-for="a in visimisi" :key="a.id">
-              <p v-html="a.misi"></p>
+              <p v-html="a.misi"/>
             </div>
           </div>
         </q-card>
@@ -106,7 +106,6 @@
           style=" border-radius: 20px;"
         >
           <q-input
-  
             outlined
             dense
             border
@@ -123,7 +122,7 @@
             :thumb-style="thumbStyle"
             :content-style="contentStyle"
             :content-active-style="contentActiveStyle"
-            style="height: 470px; "
+            style="height: 470px;"
           >
             <div class="q-pa-md">
               <q-table
@@ -166,51 +165,55 @@
         :duration="700"
       >
         <div class="KartuPengumuman" v-if="page === 'Pengumuman'">
+          <q-input
+            outlined
+            dense
+            border
+            rounded
+            style="top: 35px; width: 100%;"
+            v-model="filterpengumuman"
+            placeholder="Cari pengumuman"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
           <q-scroll-area
             :thumb-style="thumbStyle"
             :content-style="contentStyle"
             :content-active-style="contentActiveStyle"
-            style="height: 310px; border-radius:20px;"
+            style="height: 310px; top: 10px;"
           >
-            <q-card
-              class="my-card bg-secondary text-white"
-              style="border-radius:20px; margin:10px;"
-            >
-              <q-card-section>
-                <div class="text-h6">Judul pengumuman</div>
-                <div class="text-subtitle2">Dari @username</div>
-                <q-separator dark />
-              </q-card-section>
-              <q-card-section>
-                {{ lorem }}
-              </q-card-section>
-            </q-card>
-            <q-card
-              class="my-card bg-secondary text-white"
-              style="border-radius:20px; margin:10px;"
-            >
-              <q-card-section>
-                <div class="text-h6">Judul pengumuman</div>
-                <div class="text-subtitle2">Dari @username</div>
-                <q-separator dark />
-              </q-card-section>
-              <q-card-section>
-                {{ lorem }}
-              </q-card-section>
-            </q-card>
-            <q-card
-              class="my-card bg-secondary text-white"
-              style="border-radius:20px; margin:10px;"
-            >
-              <q-card-section>
-                <div class="text-h6">Judul pengumuman</div>
-                <div class="text-subtitle2">Dari @username</div>
-                <q-separator dark />
-              </q-card-section>
-              <q-card-section>
-                {{ lorem }}
-              </q-card-section>
-            </q-card>
+            <div class="q-pa-md">
+              <q-table
+                grid
+                :data="datapengumuman"
+                :columns="columnspengumuman"
+                row-key="name"
+                :filter="filterpengumuman"
+                hide-header
+              >
+                <template v-slot:item="props">
+                  <div class="q-pa-xs col-xs-12 col-sm-12 col-md-12">
+                    <q-card
+                      class="my-card bg-secondary text-white"
+                      style="border-radius:20px;"
+                    >
+                      <q-card-section>
+                        <div class="text-h6">{{ props.row.title }}</div>
+                        <div class="text-subtitle2">
+                          {{ props.row.content }}
+                        </div>
+                        <q-separator dark />
+                      </q-card-section>
+                      <q-card-section>
+                    <q-btn @click="unduhfile(props.row.attachment)" outline rounded color="primary" label="download" text-color="white" />
+                      </q-card-section>
+                    </q-card>
+                  </div>
+                </template>
+              </q-table>
+            </div>
           </q-scroll-area>
         </div>
       </transition>
@@ -363,8 +366,38 @@ import axios from "app/node_modules/axios";
 export default {
   data() {
     return {
+      filterpengumuman: "",
       filter: "",
-
+      columnspengumuman: [
+        {
+          name: "title",
+          label: "Judul pengumuman",
+          field: "title",
+          align: "left",
+          sortable: true
+        },
+        {
+          name: "content",
+          label: "Konten",
+          field: "content",
+          align: "left",
+          sortable: true
+        },
+        {
+          name: "attachment",
+          label: "Lampiran",
+          field: "attachment",
+          align: "left",
+          sortable: true
+        },
+        {
+          name: "date_created",
+          label: "Tanggal dibuatkan",
+          field: "date_created",
+          align: "left",
+          sortable: true
+        }
+      ],
       columns: [
         {
           name: "nama",
@@ -390,8 +423,7 @@ export default {
         { name: "actions", label: "Aksi", field: "id", align: "center" }
       ],
       datapengajar: [],
-      judul: "Petugas",
-      cek: {},
+      datapengumuman: [],
       visimisi: {},
       username: "",
       password: "",
@@ -415,8 +447,6 @@ export default {
       },
       page: "awal",
       heavyList,
-      lorem:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       slide: 1,
       autoplay: true
     };
@@ -428,19 +458,23 @@ export default {
       } else {
         this.$router.push("/news");
       }
-    }
+    },
+
+    unduhfile(link){
+      axios.get('http://127.0.0.1:8000'+ link
+      )
+    },
   },
   mounted() {
-    axios
-      .get("http://127.0.0.1:8000/api/visimisi/1?format=json")
-      .then(response => {
-        this.visimisi = response.data;
-        console.log(this.visimisi.visi);
-      });
+    axios.get("http://127.0.0.1:8000/api/visimisi/1").then(response => {
+      this.visimisi = response.data;
+    });
     axios
       .get("http://127.0.0.1:8000/api/pengajarstaff/?format=json")
       .then(response => (this.datapengajar = response.data));
+    axios
+      .get("http://127.0.0.1:8000/api/pengumuman/")
+      .then(response => (this.datapengumuman = response.data));
   }
 };
 </script>
-<style></style>
