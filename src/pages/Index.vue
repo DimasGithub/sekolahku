@@ -65,8 +65,9 @@
         >
           <center>
             <q-img src="~assets/sekolah.png" style="width:80%;" />
+
             <p style="font-size:20px; font-weight:bold;">
-              Sekolahku Negeri Pemalang
+              SEKOLAHKU PEMALANG
             </p>
           </center>
         </div>
@@ -85,11 +86,11 @@
           <div style="margin:10px; padding: 1px;">
             <p style="font-size: 30px; font-weight:bold;">Visi</p>
             <div v-for="a in visimisi" :key="a.id">
-              <p v-html="a.visi"/>
+              <p v-html="a.visi" />
             </div>
             <p style="font-size: 30px; font-weight:bold;">Misi</p>
             <div v-for="a in visimisi" :key="a.id">
-              <p v-html="a.misi"/>
+              <p v-html="a.misi" />
             </div>
           </div>
         </q-card>
@@ -202,12 +203,19 @@
                       <q-card-section>
                         <div class="text-h6">{{ props.row.title }}</div>
                         <div class="text-subtitle2">
-                          {{ props.row.content }}
+                          <p v-html="props.row.content" />
                         </div>
                         <q-separator dark />
                       </q-card-section>
                       <q-card-section>
-                    <q-btn @click="unduhfile(props.row.attachment)" outline rounded color="primary" label="download" text-color="white" />
+                        <q-btn
+                          @click="unduhfile(props.row.attachment)"
+                          outline
+                          rounded
+                          color="primary"
+                          label="download"
+                          text-color="white"
+                        />
                       </q-card-section>
                     </q-card>
                   </div>
@@ -228,73 +236,31 @@
           v-if="page === 'Jadwal'"
           style=" width: 100%; height: 100%; margin:10px; padding: 1px;"
         >
-          <q-stepper v-model="step" vertical color="primary" animated>
-            <q-step
-              :name="1"
-              title="Pembagian raport siswa"
-              icon="assignment"
-              caption="10 maret 2020"
-              :done="step > 1"
-            >
-              Pembagian rapot siswa tanggal 27 maret 2020 dapat diambil diruang
-              kelas masing masing
 
-              <q-stepper-navigation>
-                <q-btn @click="step = 2" color="primary" label="Lanjut" />
-              </q-stepper-navigation>
-            </q-step>
-
-            <q-step
-              :name="2"
-              title="Pelatihan jaringan guru tkj"
-              caption="28 maret 2020"
-              icon="assignment"
-              :done="step > 2"
-            >
-              Pelatihan jaringan komputer untuk guru jurusan teknik komputer
-              jaringan
-
-              <q-stepper-navigation>
-                <q-btn @click="step = 4" color="primary" label="Lanjut" />
-                <q-btn
-                  flat
-                  @click="step = 1"
-                  color="primary"
-                  label="Back"
-                  class="q-ml-sm"
-                />
-              </q-stepper-navigation>
-            </q-step>
-
-            <q-step
-              :name="3"
-              title="Batasan dapodik peserta didik"
-              icon="assignment"
-              caption="14 april 2020"
-              disable
-            >
-              Batasan pengisian peserta dapodik untuk wali kelas masing-masing
-            </q-step>
-
-            <q-step
-              :name="4"
-              caption="1 mei 2020"
-              title="Hut sekolah"
-              icon="assignment"
-            >
-              memperingati hari jadi sekolah
-              <q-stepper-navigation>
-                <q-btn color="primary" label="Finish" />
-                <q-btn
-                  flat
-                  @click="step = 2"
-                  color="primary"
-                  label="Back"
-                  class="q-ml-sm"
-                />
-              </q-stepper-navigation>
-            </q-step>
-          </q-stepper>
+          <div class="q-pa-md">
+            <q-date
+              first-day-of-week="1"
+              v-model="date"
+              today-btn
+              :events="tanggal.tglstr"
+              event-color="orange"
+            />
+          </div>
+          <q-scroll-area
+            :thumb-style="thumbStyle"
+            :content-style="contentStyle"
+            :content-active-style="contentActiveStyle"
+            style="height: 310px; top: 10px;"
+          >
+          <div v-for="a in tanggal" :key="a.id">
+            <q-card class="my-card" style=" border-radius: 20px; margin:5px;">
+              <div style="margin:10px; padding: 1px;" v-if="date === a.tglstr">
+                <p style="font-size: 30px;">{{ a.tglstr }}</p>
+                <p v-html="a.events"/>
+              </div>
+            </q-card>
+          </div>
+          </q-scroll-area>
         </div>
       </transition>
       <div v-if="page === 'Login'">
@@ -427,7 +393,10 @@ export default {
       visimisi: {},
       username: "",
       password: "",
+      tanggal: {},
+      date: "",
       step: 1,
+      events: [],
       contentStyle: {
         backgroundColor: "rgba(0,0,0,0.02)",
         color: "#555",
@@ -459,13 +428,23 @@ export default {
         this.$router.push("/news");
       }
     },
-
-    unduhfile(link){
-      axios.get('http://127.0.0.1:8000'+ link
-      )
-    },
+    unduhfile(link) {
+      axios.get("http://127.0.0.1:8000" + link);
+    }
   },
   mounted() {
+    var MyDate = new Date();
+    var MyDateString;
+    MyDate.setDate(MyDate.getDate());
+    MyDateString =
+      MyDate.getFullYear() +
+      "/" +
+      ("0" + (MyDate.getMonth() + 1)).slice(-2) +
+      "/" +
+      ("0" + MyDate.getDate()).slice(-2);
+
+    this.date = MyDateString;
+
     axios.get("http://127.0.0.1:8000/api/visimisi/1").then(response => {
       this.visimisi = response.data;
     });
@@ -475,6 +454,9 @@ export default {
     axios
       .get("http://127.0.0.1:8000/api/pengumuman/")
       .then(response => (this.datapengumuman = response.data));
+    axios
+      .get("http://127.0.0.1:8000/api/jadwal/")
+      .then(response => (this.tanggal = response.data));
   }
 };
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
     <div>
-      <div style="font-size: 30vh">
-        404
+      <div style="font-size: 30px;">
+        Maaf
       </div>
 
       <div class="text-h2" style="opacity:.4">
-        Oops. Nothing here...
+        Fitur belum tersedia
       </div>
 
       <q-btn

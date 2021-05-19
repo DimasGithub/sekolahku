@@ -15,7 +15,7 @@
           style="width:46%; padding: 40px; border-top-left-radius : 50px; margin:5px;"
         />
         <q-btn
-          @click="$router.push('/indexpengajarstaff')"
+          @click="$router.push('/indexpengumuman')"
           unelevated
           color="primary"
           label="pengumuman"
@@ -39,6 +39,7 @@
           style="width:46%; padding:40px; border-bottom-left-radius : 50px; margin:5px;"
         />
         <q-btn
+          @click="$router.push('/indexjadwal')"
           unelevated
           color="primary"
           label="Jadwal"
