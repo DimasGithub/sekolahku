@@ -10,7 +10,6 @@
           aria-label="Menu"
           @click="$router.push('/indexadmin')"
         />
-
         <q-toolbar-title>
           <q-input
             bg-color="white"
@@ -50,6 +49,7 @@
                 <div class="q-pa-xs col-xs-12 col-sm-12 col-md-12">
                   <div class="row">
                     <q-card
+                      @click="ngedit(props.row.id)"
                       class="my-card"
                       style="width:100%; border-radius:20px;"
                     > <p style="font-weight:bold; margin:10px;">Tanggal :</p>
@@ -113,12 +113,19 @@ export default {
     hapus(id) {
       axios
         .delete("http://127.0.0.1:8000/api/Detailpengajarstaff/" + id)
-        .then(location.reload())
+        .then(response => 
+        {
+          location.reload();
+          this.$q.notify({
+            type: "positive",
+            message: `Data berhasil dihapus.`
+          });
+        })
         .catch(err => err);
       console.log("Deleted article successfully " + id);
     },
     ngedit(id) {
-      this.$router.push("editpengajarstaff/" + id);
+      this.$router.push("editjadwal/" + id);
     }
   }
 };

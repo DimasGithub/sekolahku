@@ -9,22 +9,22 @@
       <div class="q-pa-md q-gutter-sm">
         <h4>Edit Visi & Misi</h4>
         <p style="font-size : 20px;">Visi :</p>
-          <q-editor
-            v-model="visimisi.visi"
-            :definitions="{
-              bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' }
-            }"
-          />
-     
+        <q-editor
+          v-model="visimisi.visi"
+          :definitions="{
+            bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' }
+          }"
+        />
+
         <p style="font-size : 20px;">Misi :</p>
-       
-          <q-editor
-            v-model="visimisi.misi"
-            :definitions="{
-              bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' }
-            }"
-          />
-    
+
+        <q-editor
+          v-model="visimisi.misi"
+          :definitions="{
+            bold: { label: 'Bold', icon: null, tip: 'My bold tooltip' }
+          }"
+        />
+
         <q-btn
           rounded
           color="primary"
@@ -34,6 +34,7 @@
           style="width:100%; margin-top: 20px; font-weight:bold;"
         />
         <q-btn
+          @click="$router.push('/indexadmin')"
           rounded
           outline
           color="primary"
@@ -52,28 +53,26 @@ import _ from "lodash";
 export default {
   data() {
     return {
-
-      visimisi: {
-      }
+      visimisi: {}
     };
   },
-  methods:{
- ubah() {
+  methods: {
+    berhasil() {
+    this.$q.notify({
+            type: "positive",
+            message: `Data berhasil diubah.`
+          });
+    },
+    ubah() {
       let visimisi = new FormData();
       _.each(this.visimisi, (value, key) => {
         visimisi.append(key, value);
       });
       axios
-        .put(
-          "http://127.0.0.1:8000/api/visimisi/1?format=json",
-          this.visimisi
-        )
+        .put("http://127.0.0.1:8000/api/visimisi/1?format=json", this.visimisi)
         .then(response => {
+          this.berhasil();
           this.$router.push("/indexadmin");
-          this.$q.notify({
-            type: "positive",
-            message: `Data berhasil diubah.`
-          });
         })
         .catch(err => {
           if (err.response.status === 422) {
@@ -97,7 +96,6 @@ export default {
       .then(response => {
         this.visimisi = response.data[0];
       });
-  
   }
 };
 </script>

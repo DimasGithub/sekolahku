@@ -11,7 +11,7 @@
           @click="$router.push('/indexpengajarstaff')"
         />
         <q-toolbar-title>
-          Edit Pengajar & staff
+          Ubah Pengajar & staff
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -136,7 +136,7 @@ export default {
           this.$router.push("/indexpengajarstaff");
           this.$q.notify({
             type: "positive",
-            message: `Data berhasil ditambah.`
+            message: `Data berhasil diubah.`
           });
         })
         .catch(err => {

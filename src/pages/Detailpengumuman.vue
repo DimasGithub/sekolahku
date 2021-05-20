@@ -67,6 +67,7 @@
                 style="width:90%; margin-bottom:20px; justify-content: center;"
               />
               <q-btn
+                @click="confirm = true"
                 rounded
                 dense
                 outlined
@@ -78,6 +79,31 @@
           </transition>
         </form>
       </div>
+                          <q-dialog v-model="confirm" persistent>
+                            <q-card style="font-family: customfont;">
+                              <q-card-section class="row items-center">
+                                <span class="q-ml-sm"
+                                  >Apakah anda yakin akan dihapus?</span
+                                >
+                              </q-card-section>
+
+                              <q-card-actions align="right">
+                                <q-btn
+                                  flat
+                                  label="Batal"
+                                  color="primary"
+                                  v-close-popup
+                                />
+                                <q-btn
+                                  flat
+                                  label="Hapus"
+                                  color="primary"
+                                  v-close-popup
+                                  @click="hapus(datapengumuman.id)"
+                                />
+                              </q-card-actions>
+                            </q-card>
+                          </q-dialog>
     </q-page-container>
   </q-layout>
 </template>
@@ -89,6 +115,7 @@ export default {
   props: ["id"],
   data() {
     return {
+      confirm: false,
       datapengumuman: {
         title: "",
         content: "",
@@ -104,13 +131,7 @@ export default {
       });
   },
   methods: {
-    hapus(id) {
-      axios
-        .delete("http://127.0.0.1:8000/api/pengumuman/" + this.id)
-        .then(location.reload())
-        .catch(err => err);
-      console.log("Deleted article successfully " + id);
-    },
+
     editpengumuman() {
       let datapengumuman = new FormData();
       datapengumuman.append("attachment", this.datapengumuman.attachment);
@@ -131,7 +152,7 @@ export default {
           this.$router.push("/indexadmin");
           this.$q.notify({
             type: "positive",
-            message: `Data berhasil ditambah.`
+            message: `Data berhasil diubah.`
           });
         })
         .catch(err => {
@@ -147,6 +168,17 @@ export default {
     },
     handleFileObject() {
       this.datapengumuman.attachment = this.$refs.file.files[0];
+    },
+    hapus(id) {
+      axios
+        .delete("http://127.0.0.1:8000/api/pengumuman/" + id)
+        .then(response =>
+          {this.$router.push("/indexpengumuman");
+           this.$q.notify({
+            type: "positive",
+            message: `Data berhasil dihapus.`
+          });
+          })
     }
   }
   // name: 'PageName',

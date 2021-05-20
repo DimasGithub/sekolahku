@@ -79,7 +79,7 @@
                 type="reset"
                 rounded
                 dense
-                outlined
+                outline
                 color="primary"
                 label="Batal"
                 style="width:90%; justify-content: center; margin-bottom:20px;"
@@ -110,10 +110,11 @@ export default {
       axios
         .post("http://127.0.0.1:8000/api/jadwal/",this.tanggal)
         .then(response => {
-          this.$router.push("/addjadwal");
+          this.$router.push("/indexjadwal");
           this.$q.notify({
+            
             type: "positive",
-            message: `Data berhasil ditambah.`
+            message: `Jadwal berhasil ditambah.`
           });
         })
         .catch(err => {

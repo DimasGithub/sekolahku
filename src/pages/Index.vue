@@ -19,23 +19,19 @@
             <q-carousel-slide
               :name="1"
               style="border-radius: 30px;"
-              img-src="https://cdn.quasar.dev/img/mountains.jpg"
+              img-src="~assets/1.jpg"
             />
             <q-carousel-slide
               :name="2"
               style="border-radius: 30px;"
-              img-src="https://specials-images.forbesimg.com/imageserve/179282892/960x0.jpg?fit=scale"
+              img-src="~assets/2.jpg"
             />
             <q-carousel-slide
               :name="3"
               style="border-radius: 30px;"
-              img-src="https://cdn.quasar.dev/img/parallax2.jpg"
+              img-src="~assets/3.jpg"
             />
-            <q-carousel-slide
-              :name="4"
-              style="border-radius: 30px;"
-              img-src="https://cdn.quasar.dev/img/quasar.jpg"
-            />
+
           </q-carousel>
         </div>
       </div>
@@ -289,9 +285,19 @@
               style="margin-top:30px;"
             />
             <q-btn
+              @click="login"
               rounded
               color="primary"
-              label="Login"
+              label="Masuk"
+              dense
+              style="width:100%; margin-top: 20px; font-weight:bold;"
+            />
+            <q-btn
+              @click=" page = 'awal'"
+              outline
+              rounded
+              color="primary"
+              label="Batal"
               dense
               style="width:100%; margin-top: 20px; font-weight:bold;"
             />
@@ -313,10 +319,6 @@ const heavyList = [
   },
   {
     label: "Pengumuman",
-    class: "q-pa-lg text-white"
-  },
-  {
-    label: "Berita",
     class: "q-pa-lg text-white"
   },
   {
@@ -388,11 +390,11 @@ export default {
         },
         { name: "actions", label: "Aksi", field: "id", align: "center" }
       ],
+      username: '',
+      password: '',
       datapengajar: [],
       datapengumuman: [],
       visimisi: {},
-      username: "",
-      password: "",
       tanggal: {},
       date: "",
       step: 1,
@@ -426,6 +428,19 @@ export default {
         this.page = halaman;
       } else {
         this.$router.push("/news");
+      }
+    },
+    login(){
+      if (this.username === 'admin' && this.password === 'admin'){
+        this.$router.push('/indexadmin');
+      }else{
+        this.username = '';
+        this.password = '';
+        this.$q.notify({
+            type: "negative",
+            message: 'Username atau Password anda salah',
+          });
+
       }
     },
     unduhfile(link) {

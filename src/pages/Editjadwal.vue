@@ -11,7 +11,7 @@
           @click="$router.push('/indexjadwal')"
         />
         <q-toolbar-title>
-          Tambah jadwal
+          Ubah jadwal
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -33,7 +33,6 @@
                 outlined
                 lazy-rules
                 style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
-                
               >
                 <template v-slot:append>
                   <q-icon name="event" class="cursor-pointer">
@@ -67,27 +66,46 @@
                 }"
               />
               <q-btn
-                @click.prevent="addJadwal"
+                @click.prevent="editJadwal"
                 type="submit"
                 dense
                 rounded
-                color="primary"
-                label="Tambah"
+                color="warning"
+                label="Edit"
                 style="width:90%; margin-bottom:20px; justify-content: center;"
               />
               <q-btn
+                @click="confirm = true"
                 type="reset"
                 rounded
                 dense
                 outlined
-                color="primary"
-                label="Batal"
+                color="negative"
+                label="Hapus"
                 style="width:90%; justify-content: center; margin-bottom:20px;"
               />
             </div>
           </transition>
         </form>
       </div>
+      <q-dialog v-model="confirm" persistent>
+        <q-card style="font-family: customfont;">
+          <q-card-section class="row items-center">
+            <span class="q-ml-sm">Apakah anda yakin akan dihapus?</span>
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="Batal" color="primary" v-close-popup />
+            <q-btn
+              flat
+              label="Hapus"
+              color="primary"
+              v-close-popup
+              @click="hapus(tanggal.id)"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </q-page-container>
   </q-layout>
 </template>
@@ -95,22 +113,28 @@
 <script>
 import axios from "axios";
 import _ from "lodash";
+import router from "src/router";
 
 export default {
-  
+  props: ["id"],
   data() {
-    props:["id"]
     return {
+      confirm: false,
       tanggal: {
-        date_schedule: '',
-        events: "",
+        date_schedule: "",
+        events: ""
       }
     };
   },
+  mounted() {
+    axios.get("http://127.0.0.1:8000/api/jadwal/" + this.id).then(response => {
+      this.tanggal = response.data[0];
+    });
+  },
   methods: {
-    addJadwal() {
+    editJadwal() {
       axios
-        .out("http://127.0.0.1:8000/api/jadwal/",this.tanggal)
+        .put("http://127.0.0.1:8000/api/jadwal/" + this.id, this.tanggal)
         .then(response => {
           this.$router.push("/indexadmin");
           this.$q.notify({
@@ -128,6 +152,11 @@ export default {
             });
           }
         });
+    },
+    hapus(id) {
+      axios
+        .delete("http://127.0.0.1:8000/api/jadwal/" + id)
+        .then(this.$router.push("/indexjadwal"));
     }
   }
   // name: 'PageName',

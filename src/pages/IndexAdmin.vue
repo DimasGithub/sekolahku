@@ -32,18 +32,13 @@
         />
       </div>
       <div class="row justify-around" style="width:100%;">
-        <q-btn
-          unelevated
-          color="primary"
-          label="Berita"
-          style="width:46%; padding:40px; border-bottom-left-radius : 50px; margin:5px;"
-        />
+
         <q-btn
           @click="$router.push('/indexjadwal')"
           unelevated
           color="primary"
           label="Jadwal"
-          style="width:46%; padding:40px; border-bottom-right-radius : 50px; margin:5px;"
+          style="width:96%; padding:40px; border-bottom-left-radius : 50px;  border-bottom-right-radius : 50px; margin:5px;"
         />
       </div>
     </q-page>

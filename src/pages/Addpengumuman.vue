@@ -70,7 +70,8 @@
                 type="reset"
                 rounded
                 dense
-                outlined
+                outline
+                
                 color="primary"
                 label="Batal"
                 style="width:90%; justify-content: center; margin-bottom:20px;"

@@ -72,7 +72,7 @@
                             <q-icon name="edit" />
                           </q-btn>
                           <q-btn
-                            @click="hapus(props.row.id)"
+                            @click="confirm = true"
                             align="between"
                             unelevated
                             label="hapus"
@@ -81,14 +81,9 @@
                           >
                             <q-icon name="delete" />
                           </q-btn>
-                          <!-- <q-dialog v-model="confirm" persistent>
-                            <q-card>
+                          <q-dialog v-model="confirm" persistent>
+                            <q-card style="font-family: customfont;">
                               <q-card-section class="row items-center">
-                                <q-avatar
-                                  icon="delete"
-                                  color="primary"
-                                  text-color="white"
-                                />
                                 <span class="q-ml-sm"
                                   >Apakah anda yakin akan dihapus?</span
                                 >
@@ -110,7 +105,7 @@
                                 />
                               </q-card-actions>
                             </q-card>
-                          </q-dialog> -->
+                          </q-dialog>
                         </div>
                       </div>
                     </div>
