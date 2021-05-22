@@ -79,31 +79,24 @@
           </transition>
         </form>
       </div>
-                          <q-dialog v-model="confirm" persistent>
-                            <q-card style="font-family: customfont;">
-                              <q-card-section class="row items-center">
-                                <span class="q-ml-sm"
-                                  >Apakah anda yakin akan dihapus?</span
-                                >
-                              </q-card-section>
+      <q-dialog v-model="confirm" persistent>
+        <q-card style="font-family: customfont;">
+          <q-card-section class="row items-center">
+            <span class="q-ml-sm">Apakah anda yakin akan dihapus?</span>
+          </q-card-section>
 
-                              <q-card-actions align="right">
-                                <q-btn
-                                  flat
-                                  label="Batal"
-                                  color="primary"
-                                  v-close-popup
-                                />
-                                <q-btn
-                                  flat
-                                  label="Hapus"
-                                  color="primary"
-                                  v-close-popup
-                                  @click="hapus(datapengumuman.id)"
-                                />
-                              </q-card-actions>
-                            </q-card>
-                          </q-dialog>
+          <q-card-actions align="right">
+            <q-btn flat label="Batal" color="primary" v-close-popup />
+            <q-btn
+              flat
+              label="Hapus"
+              color="primary"
+              v-close-popup
+              @click="hapus(datapengumuman.id)"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </q-page-container>
   </q-layout>
 </template>
@@ -131,7 +124,6 @@ export default {
       });
   },
   methods: {
-
     editpengumuman() {
       let datapengumuman = new FormData();
       datapengumuman.append("attachment", this.datapengumuman.attachment);
@@ -172,13 +164,13 @@ export default {
     hapus(id) {
       axios
         .delete("http://127.0.0.1:8000/api/pengumuman/" + id)
-        .then(response =>
-          {this.$router.push("/indexpengumuman");
-           this.$q.notify({
+        .then(response => {
+          this.$router.push("/indexpengumuman");
+          this.$q.notify({
             type: "positive",
             message: `Data berhasil dihapus.`
           });
-          })
+        });
     }
   }
   // name: 'PageName',

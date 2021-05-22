@@ -1,10 +1,6 @@
 const routes = [
-  {
-    path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Index.vue') }
-    ]
+  { 
+    path: '/', component: () => import('pages/Index.vue') 
   },
   {
     path: '/indexadmin',
@@ -47,7 +43,13 @@ const routes = [
   { 
     path: '/indexpengajarstaff', component: () => import('pages/Indexpengajarstaff.vue') 
   },
-  
+  { 
+    path: '/indextentang', component: () => import('pages/Tentang.vue') 
+  },
+  { 
+    path: '/indexpengaturan', component: () => import('pages/Pengaturan.vue') 
+  },
+
 
   // Always leave this as last one,
   // but you can also remove it

@@ -160,7 +160,7 @@ export default {
       axios.get("http://127.0.0.1:8000" + link);
     },
     ngedit(id) {
-      this.$router.push("detailpengumuman/" + id);
+      this.$router.push("/detailpengumuman/" + id);
     }
   }
 };

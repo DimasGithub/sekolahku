@@ -156,7 +156,14 @@ export default {
     hapus(id) {
       axios
         .delete("http://127.0.0.1:8000/api/jadwal/" + id)
-        .then(this.$router.push("/indexjadwal"));
+        .then(response => 
+        {
+          this.$router.push("/indexjadwal");
+          this.$q.notify({
+            type: "positive",
+            message: `Data berhasil dihapus.`
+          });
+        });
     }
   }
   // name: 'PageName',

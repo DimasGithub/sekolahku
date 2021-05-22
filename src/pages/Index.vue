@@ -1,6 +1,35 @@
 <template>
-  <q-page>
-    <div class="q-pa-md">
+  <q-layout class="ngopi" view="lHh Lpr lFf">
+    <q-header>
+      <q-toolbar>
+        <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
+        <q-toolbar-title>{{pengaturan.title_bar}}</q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer
+      v-model="drawer"
+      show-if-above
+      :width="300"
+      :breakpoint="500"
+      bordered
+      content-class="bg-grey-3"
+    >
+      <q-scroll-area class="fit">
+        <q-list>
+          <q-item clickable v-ripple @click="$router.push('/indextentang')">
+            <q-item-section avatar>
+              <q-icon name="info" />
+            </q-item-section>
+            <q-item-section>
+              Tentang
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
+    </q-drawer>
+   <q-page>
+    <div class="q-pa-md" style="margin-top:50px;">
       <div v-if="page !== 'Login'">
         <div class="slider" v-if="page !== 'Pengajar dan staff'">
           <q-carousel
@@ -59,13 +88,16 @@
           v-if="page === 'awal'"
           style=" width: 100%;  margin:10px; padding: 1px;"
         >
+    
           <center>
-            <q-img src="~assets/sekolah.png" style="width:80%;" />
+            <q-img :src="'http://127.0.0.1:8000'+pengaturan.img_main" style="width:80%;" />
 
             <p style="font-size:20px; font-weight:bold;">
-              SEKOLAHKU PEMALANG
+              {{pengaturan.title_sub}}
             </p>
           </center>
+    
+
         </div>
       </transition>
       <transition
@@ -306,6 +338,8 @@
       </div>
     </div>
   </q-page>
+  </q-layout>
+
 </template>
 <script>
 const heavyList = [
@@ -334,6 +368,7 @@ import axios from "app/node_modules/axios";
 export default {
   data() {
     return {
+      drawer: false,
       filterpengumuman: "",
       filter: "",
       columnspengumuman: [
@@ -392,6 +427,7 @@ export default {
       ],
       username: '',
       password: '',
+      pengaturan: {},
       datapengajar: [],
       datapengumuman: [],
       visimisi: {},
@@ -472,6 +508,16 @@ export default {
     axios
       .get("http://127.0.0.1:8000/api/jadwal/")
       .then(response => (this.tanggal = response.data));
+    axios
+      .get("http://127.0.0.1:8000/api/pengaturan/1")
+      .then(response => {
+        this.pengaturan = response.data[0];
+      });
   }
 };
 </script>
+<style>
+.ngopi {
+  font-family: "customfont";
+}
+</style>

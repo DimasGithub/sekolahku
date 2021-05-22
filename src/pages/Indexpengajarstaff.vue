@@ -170,7 +170,13 @@ export default {
     hapus(id) {
       axios
         .delete("http://127.0.0.1:8000/api/Detailpengajarstaff/" + id)
-        .then(location.reload())
+        .then(response => {
+          location.reload();
+          this.$q.notify({
+            type: "positive",
+            message: `Data berhasil dihapus.`
+          });
+          })
         .catch(err => err);
       console.log("Deleted article successfully " + id);
     },
