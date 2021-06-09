@@ -51,7 +51,8 @@
                 style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
               />
               <p style=" width:90%; ">Jabatan :</p>
-              <q-input
+              <q-select style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;" label="Jabatan" name="jobs" rounded standout v-model="datapengajarstaf.jobs" :options="options" dense />
+              <!-- <q-input
                 v-model="datapengajarstaf.jobs"
                 rounded
                 name="harga"
@@ -61,7 +62,7 @@
                 style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
                 lazy-rules
                 :rules="[val => (val && val.length > 0) || 'Isikan Jawban ini']"
-              />
+              /> -->
               <p style=" width:90%;">Profil gambar :</p>
               <q-img
                 :src="'http://app.iphonesborneo.com' + datapengajarstaf.picture"
@@ -103,6 +104,9 @@ export default {
   data() {
     return {
       datapengajarstaf: {},
+      options: [
+        'Kepala sekolah', 'Wakil kepala sekolah', 'Kepala staff tata usaha', 'Pengajar', 'Staff'
+      ],
       gambar: null
     };
   },

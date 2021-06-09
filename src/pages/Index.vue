@@ -261,9 +261,9 @@
         >
           <div
             v-if="page === 'Jadwal'"
-            style=" width: 100%; height: 100%; margin-right:5px;"
+            style=" width: 100%; height: 100%; margin:10px; "
           >
-            <div class="q-pa-md">
+            <div class="q-pa-md" style="text-align: center; margin: 5px;">
               <q-date
                 first-day-of-week="1"
                 v-model="date"
@@ -272,6 +272,7 @@
                 event-color="orange"
               />
             </div>
+     
               <div v-for="a in tanggal" :key="a.id">
                 <q-card
                   class="my-card"

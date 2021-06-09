@@ -52,17 +52,7 @@
                 style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
               />
               <p style=" width:90%; ">Jabatan :</p>
-              <q-input
-                rounded
-                name="jobs"
-                v-model="datapengajarstaf.jobs"
-                dense
-                outlined
-                label="Jabatan"
-                style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
-                lazy-rules
-                :rules="[val => (val && val.length > 0) || 'Isikan Jawban ini']"
-              />
+              <q-select style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;" label="Jabatan" name="jobs" rounded standout v-model="datapengajarstaf.jobs" :options="options"  dense />
               <p style=" width:90%;">Upload Gambar :</p>
               <q-file
                 rounded
@@ -111,6 +101,9 @@ export default {
         nip: 0,
         jobs: ""
       },
+       options: [
+        'Kepala sekolah', 'Wakil kepala sekolah', 'Kepala staff tata usaha', 'Pengajar', 'Staff'
+      ],
       picture: null
     };
   },
