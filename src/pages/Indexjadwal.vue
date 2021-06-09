@@ -106,13 +106,13 @@ export default {
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8000/api/jadwal/?format=json")
+      .get("http://app.iphonesborneo.com/api/jadwal/?format=json")
       .then(response => (this.jadwal = response.data));
   },
   methods: {
     hapus(id) {
       axios
-        .delete("http://127.0.0.1:8000/api/Detailpengajarstaff/" + id)
+        .delete("http://app.iphonesborneo.com/api/Detailpengajarstaff/" + id)
         .then(response => 
         {
           location.reload();

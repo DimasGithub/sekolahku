@@ -64,7 +64,7 @@
               />
               <p style=" width:90%;">Profil gambar :</p>
               <q-img
-                :src="'http://127.0.0.1:8000' + datapengajarstaf.picture"
+                :src="'http://app.iphonesborneo.com' + datapengajarstaf.picture"
                 style="width:200px; height:200px; border-radius:200px"
               />
               <p style=" width:90%;">Ganti profil gambar :</p>
@@ -119,7 +119,7 @@ export default {
         });
         axios
           .put(
-            "http://127.0.0.1:8000/api/Detailpengajarstaff/" + this.id,
+            "http://app.iphonesborneo.com/api/Detailpengajarstaff/" + this.id,
             this.datapengajarstaf,
           )
           .then(response => {
@@ -150,7 +150,7 @@ export default {
         });
         axios
           .put(
-            "http://127.0.0.1:8000/api/Detailpengajarstaff/" + this.id,
+            "http://app.iphonesborneo.com/api/Detailpengajarstaff/" + this.id,
             datapengajarstaf,
             {
               headers: {
@@ -186,7 +186,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8000/api/Detailpengajarstaff/" + this.id)
+      .get("http://app.iphonesborneo.com/api/Detailpengajarstaff/" + this.id)
       .then(response => {
         this.datapengajarstaf = response.data[0];
         console.log(this.datapengajarstaf);

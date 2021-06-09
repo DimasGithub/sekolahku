@@ -106,7 +106,7 @@ export default {
         datapengumuman.append(key, value);
       });
       axios
-        .post("http://127.0.0.1:8000/api/pengumuman/", datapengumuman, {
+        .post("http://app.iphonesborneo.com/api/pengumuman/", datapengumuman, {
           headers: {
             "Content-type": "multipart/form-data"
           }

@@ -118,7 +118,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8000/api/pengumuman/" + this.id)
+      .get("http://app.iphonesborneo.com/api/pengumuman/" + this.id)
       .then(response => {
         this.datapengumuman = response.data[0];
       });
@@ -132,7 +132,7 @@ export default {
       });
       axios
         .put(
-          "http://127.0.0.1:8000/api/pengumuman/" + this.id,
+          "http://app.iphonesborneo.com/api/pengumuman/" + this.id,
           datapengumuman,
           {
             headers: {
@@ -163,7 +163,7 @@ export default {
     },
     hapus(id) {
       axios
-        .delete("http://127.0.0.1:8000/api/pengumuman/" + id)
+        .delete("http://app.iphonesborneo.com/api/pengumuman/" + id)
         .then(response => {
           this.$router.push("/indexpengumuman");
           this.$q.notify({

@@ -127,14 +127,14 @@ export default {
     };
   },
   mounted() {
-    axios.get("http://127.0.0.1:8000/api/jadwal/" + this.id).then(response => {
+    axios.get("http://app.iphonesborneo.com/api/jadwal/" + this.id).then(response => {
       this.tanggal = response.data[0];
     });
   },
   methods: {
     editJadwal() {
       axios
-        .put("http://127.0.0.1:8000/api/jadwal/" + this.id, this.tanggal)
+        .put("http://app.iphonesborneo.com/api/jadwal/" + this.id, this.tanggal)
         .then(response => {
           this.$router.push("/indexadmin");
           this.$q.notify({
@@ -155,7 +155,7 @@ export default {
     },
     hapus(id) {
       axios
-        .delete("http://127.0.0.1:8000/api/jadwal/" + id)
+        .delete("http://app.iphonesborneo.com/api/jadwal/" + id)
         .then(response => 
         {
           this.$router.push("/indexjadwal");

@@ -122,7 +122,7 @@ export default {
         datapengajarstaf.append(key, value);
       });
       axios
-        .post("http://127.0.0.1:8000/api/pengajarstaff/", datapengajarstaf, {
+        .post("http://app.iphonesborneo.com/api/pengajarstaff/", datapengajarstaf, {
           headers: {
             "Content-Type":
               "multipart/form-data; charset=utf-8; boundary=" +

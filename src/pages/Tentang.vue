@@ -20,7 +20,7 @@
         <q-card class="my-card" style="margin:10px; border-radius:20px;">
           <div v-for="a in pengaturan" :key="a.id">
             <img
-              :src="'http://127.0.0.1:8000' + a.img_about"
+              :src="'http://app.iphonesborneo.com' + a.img_about"
               style="width:300px; display: block; margin-left: auto; margin-right: auto;"
             />
             <q-card-section
@@ -65,7 +65,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8000/api/pengaturan/1")
+      .get("http://app.iphonesborneo.com/api/pengaturan/1")
       .then(response => (this.pengaturan = response.data));
   }
 };
