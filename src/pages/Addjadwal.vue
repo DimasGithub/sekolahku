@@ -108,7 +108,7 @@ export default {
   methods: {
     addJadwal() {
       axios
-        .post("http://app.iphonesborneo.com/api/jadwal/",this.tanggal)
+        .post("http://127.0.0.1:8000/api/jadwal/",this.tanggal)
         .then(response => {
           this.$router.push("/indexjadwal");
           this.$q.notify({

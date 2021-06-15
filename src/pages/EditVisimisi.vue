@@ -69,7 +69,7 @@ export default {
         visimisi.append(key, value);
       });
       axios
-        .put("http://app.iphonesborneo.com/api/visimisi/1?format=json", this.visimisi)
+        .put("http://127.0.0.1:8000/api/visimisi/1?format=json", this.visimisi)
         .then(response => {
           this.berhasil();
           this.$router.push("/indexadmin");
@@ -92,7 +92,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://app.iphonesborneo.com/api/visimisi/1?format=json")
+      .get("http://127.0.0.1:8000/api/visimisi/1?format=json")
       .then(response => {
         this.visimisi = response.data[0];
       });

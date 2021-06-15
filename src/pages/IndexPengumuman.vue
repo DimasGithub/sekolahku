@@ -152,12 +152,12 @@ export default {
   },
   mounted() {
     axios
-      .get("http://app.iphonesborneo.com/api/pengumuman/")
+      .get("http://127.0.0.1:8000/api/pengumuman/")
       .then(response => (this.datapengumuman = response.data));
   },
   methods: {
     unduhfile(link) {
-      axios.get("http://app.iphonesborneo.com" + link);
+      axios.get("http://127.0.0.1:8000" + link);
     },
     ngedit(id) {
       this.$router.push("/detailpengumuman/" + id);

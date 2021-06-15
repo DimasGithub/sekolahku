@@ -59,7 +59,7 @@ const linksData = [
     title: 'Keluar',
     caption: 'Keluar admin',
     icon: 'logout',
-    link: 'http://app.iphonesborneo.com:8080/'
+    link: 'http://127.0.0.1:8000:8080/'
 
   },
 

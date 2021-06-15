@@ -51,7 +51,7 @@
                   <div class="row ">
                     <div style="width:25%;">
                       <q-img
-                        :src="'http://app.iphonesborneo.com' + props.row.picture"
+                        :src="'http://127.0.0.1:8000' + props.row.picture"
                         style="width:90px; height:90px; border-radius:100%;margin-right:20px;"
                       />
                     </div>
@@ -163,13 +163,13 @@ export default {
   },
     mounted() {
     axios
-      .get("http://app.iphonesborneo.com/api/pengajarstaff/?format=json")
+      .get("http://127.0.0.1:8000/api/pengajarstaff/?format=json")
       .then(response => (this.datapengajar = response.data));
   },
   methods: {
     hapus(id) {
       axios
-        .delete("http://app.iphonesborneo.com/api/Detailpengajarstaff/" + id)
+        .delete("http://127.0.0.1:8000/api/Detailpengajarstaff/" + id)
         .then(response => {
           location.reload();
           this.$q.notify({

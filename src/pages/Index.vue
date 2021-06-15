@@ -89,7 +89,7 @@
           >
             <center>
               <q-img
-                :src="'http://app.iphonesborneo.com' + pengaturan.img_main"
+                :src="'http://127.0.0.1:8000' + pengaturan.img_main"
                 style="width:80%;"
               />
 
@@ -166,7 +166,7 @@
                       <div class="row ">
                         <div style="width:25%;">
                           <q-img
-                            :src="'http://app.iphonesborneo.com' + props.row.picture"
+                            :src="'http://127.0.0.1:8000' + props.row.picture"
                             style="width:90px; height:90px; border-radius:100%;margin-right:20px;"
                           />
                         </div>
@@ -477,7 +477,7 @@ export default {
       }
     },
     unduhfile(link) {
-      axios.get("http://app.iphonesborneo.com" + link);
+      axios.get("http://127.0.0.1:8000" + link);
     }
   },
   mounted() {
@@ -493,19 +493,19 @@ export default {
 
     this.date = MyDateString;
 
-    axios.get("http://app.iphonesborneo.com/api/visimisi/1").then(response => {
+    axios.get("http://127.0.0.1:8000/api/visimisi/1").then(response => {
       this.visimisi = response.data;
     });
     axios
-      .get("http://app.iphonesborneo.com/api/pengajarstaff/?format=json")
+      .get("http://127.0.0.1:8000/api/pengajarstaff/?format=json")
       .then(response => (this.datapengajar = response.data));
     axios
-      .get("http://app.iphonesborneo.com/api/pengumuman/")
+      .get("http://127.0.0.1:8000/api/pengumuman/")
       .then(response => (this.datapengumuman = response.data));
     axios
-      .get("http://app.iphonesborneo.com/api/jadwal/")
+      .get("http://127.0.0.1:8000/api/jadwal/")
       .then(response => (this.tanggal = response.data));
-    axios.get("http://app.iphonesborneo.com/api/pengaturan/1").then(response => {
+    axios.get("http://127.0.0.1:8000/api/pengaturan/1").then(response => {
       this.pengaturan = response.data[0];
     });
   }

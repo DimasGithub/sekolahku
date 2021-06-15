@@ -50,7 +50,7 @@
 
               <p style=" width:90%;">Gambar utama :</p>
               <q-img
-                :src="'http://app.iphonesborneo.com' + pengaturan.img_main"
+                :src="'http://127.0.0.1:8000' + pengaturan.img_main"
                 style="width:50%; margin-bottom:10px;"
               />
           
@@ -109,7 +109,7 @@
               />
               <p style=" width:90%; ">Gambar tentang :</p>
               <q-img
-                :src="'http://app.iphonesborneo.com' + pengaturan.img_about"
+                :src="'http://127.0.0.1:8000' + pengaturan.img_about"
                 style="width:50%; margin-bottom:10px;"
               />
               <q-file color="primary" rounded dense outlined v-model="gambar2" label="Gambar tentang" style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;">
@@ -160,7 +160,7 @@ export default {
     };
   },
   mounted() {
-    axios.get("http://app.iphonesborneo.com/api/pengaturan/1").then(response => {
+    axios.get("http://127.0.0.1:8000/api/pengaturan/1").then(response => {
       this.pengaturan = response.data[0];
     });
   },
@@ -174,7 +174,7 @@ export default {
           pengaturan.append(key, value);
         });
         axios
-          .patch("http://app.iphonesborneo.com/api/pengaturan/1", pengaturan, {
+          .patch("http://127.0.0.1:8000/api/pengaturan/1", pengaturan, {
             headers: {
               "Content-type": "multipart/form-data"
             }
