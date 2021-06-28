@@ -31,4 +31,5 @@ https://play.google.com/store/apps/details?id=id.co.studioweb
 
 
 ### Project image
-<img src = 'https://github.com/sonadztux/sonadztux/blob/master/images/python2.png' height='30'/>
+<img src = 'https://github.com/DimasGithub/sekolahku/blob/master/custom%20%E2%80%93%201.png' />
+<img src = 'https://github.com/DimasGithub/sekolahku/blob/master/custom%20%E2%80%93%202.png' />
