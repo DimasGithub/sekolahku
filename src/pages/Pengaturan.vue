@@ -108,11 +108,12 @@
                 style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;"
               />
               <p style=" width:90%; ">Gambar tentang :</p>
+              <p style="width : 90%; ">{{pengaturan.img_about}}</p>
               <q-img
                 :src="'http://127.0.0.1:8000' + pengaturan.img_about"
                 style="width:50%; margin-bottom:10px;"
               />
-              <q-file color="primary" rounded dense outlined v-model="gambar2" label="Gambar tentang" style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;">
+              <q-file color="primary" rounded dense outlined v-model="pengaturan.img_about" label="Gambar tentang" style="width:90%; margin-right:10px; margin-left:10px; justify-content: center;">
                 <template v-if="gambar2" v-slot:append>
                   <q-icon
                     name="cancel"
@@ -205,7 +206,7 @@ export default {
       this.gambar2 = this.$refs.file.files[1];
     }
   }
-  // name: 'PageName',
+
 };
 </script>
 <style>
