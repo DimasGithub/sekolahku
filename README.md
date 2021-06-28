@@ -24,3 +24,11 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://v1.quasar.dev/quasar-cli/quasar-conf-js).
+
+
+### Download apps
+https://play.google.com/store/apps/details?id=id.co.studioweb
+
+
+### Project image
+<img src = 'https://github.com/sonadztux/sonadztux/blob/master/images/python2.png' height='30'/>
